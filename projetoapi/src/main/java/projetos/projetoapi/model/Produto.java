@@ -1,20 +1,19 @@
 package projetos.projetoapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
+@JsonPropertyOrder({"id", "nome", "descricao", "preco"})
 public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Integer id;
+    private String id;
 
+    private String nome;
     private String descricao;
-    private Double valor;
-
+    private Double preco;
 }

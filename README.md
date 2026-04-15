@@ -31,6 +31,12 @@
 
 ---
 
+<div align="center">
+  <img src="./Clientes.png" alt="Banner Clientes" width="600px">
+</div>
+
+---
+
 ## 🚀 O Manifesto
 
 Se o Bare Metal representa **controle**, o Spring Boot representa **velocidade, produtividade e escalabilidade**.

@@ -31,6 +31,10 @@
 
 ---
 
+![Logo do Projeto](https://via.placeholder.com/150)
+
+---
+
 ## 🚀 O Manifesto
 
 Se o Bare Metal representa **controle**, o Spring Boot representa **velocidade, produtividade e escalabilidade**.

@@ -46,7 +46,7 @@ Este projeto foca no que realmente importa: **regra de negócio e geração de v
 A arquitetura foi construída utilizando:
 
 - **Java + Spring Boot**
-- **PostMan** 
+- **PostMan para testes** 
 - **HTML, CSS e JavaScript** no frontend
 - **Banco de dados H2** para desenvolvimento e testes  
   → Acesse o console: http://localhost:8080/h2-console

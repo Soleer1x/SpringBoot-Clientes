@@ -7,7 +7,7 @@
  ╚═══██╗ ██╔═══╝ ██╔══██╗██║██║╚██╗██║██║   ██║    ██╔══██╗██║   ██║██║   ██║   ██║   
 ██████╔╝ ██║     ██║  ██║██║██║ ╚████║╚██████╔╝    ██████╔╝╚██████╔╝╚██████╔╝   ██║   
 ╚═════╝  ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝     ╚═════╝  ╚══════╝ ╚══════╝   ╚═╝   
- 
+
  ░░░  E N T E R P R I S E  -  G R A D E  -  S Y S T E M S  ░░░
 </pre>
 
@@ -18,8 +18,9 @@
 <br/><br/>
 
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring&logoColor=white)](https://spring.io/projects/spring-boot)
-[![Java 25](https://img.shields.io/badge/JDK_25-000000?style=for-the-badge&logo=openjdk&logoColor=ED8B00)](https://openjdk.org/)
-[![Microservices](https://img.shields.io/badge/Architecture-Microservices-1a1a2e?style=for-the-badge)](https://microservices.io/)
+[![Java](https://img.shields.io/badge/Java-000000?style=for-the-badge&logo=openjdk&logoColor=ED8B00)](https://openjdk.org/)
+[![H2 Database](https://img.shields.io/badge/Database-H2-0a0a0a?style=for-the-badge)](http://localhost:8080/h2-console)
+[![Architecture](https://img.shields.io/badge/Architecture-Microservices-1a1a2e?style=for-the-badge)](#)
 [![Status](https://img.shields.io/badge/Status-Production_Ready-brightgreen?style=for-the-badge)](#)
 
 <br/>
@@ -32,11 +33,20 @@
 
 ## 🚀 O Manifesto
 
-Se o Bare Metal é sobre **controle**, o Spring Boot é sobre **velocidade e resiliência**.
+Se o Bare Metal representa **controle**, o Spring Boot representa **velocidade, produtividade e escalabilidade**.
 
-Este repositório é a evolução natural da engenharia. Aqui, não perdemos tempo configurando XML ou instanciando conexões manualmente. Nós focamos no que importa: **Regras de Negócio e Valor.**
+Este projeto foca no que realmente importa: **regra de negócio e geração de valor**, eliminando complexidades desnecessárias de configuração.
 
-O Spring não é "magia"; é o ápice da Inversão de Controle e Injeção de Dependência aplicada para criar sistemas que não apenas funcionam, mas escalam.
+A arquitetura foi construída utilizando:
+
+- **Java + Spring Boot**
+- **HTML, CSS e JavaScript** no frontend
+- **Banco de dados H2** para desenvolvimento e testes  
+  → Acesse o console: http://localhost:8080/h2-console
+
+O objetivo não é apenas fazer funcionar, mas criar uma base sólida, organizada e pronta para evoluir.
+
+---
 
 ```java
 @RestController

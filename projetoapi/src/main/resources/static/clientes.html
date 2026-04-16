@@ -1,834 +1,169 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Gestão de Clientes</title>
-    <link rel="stylesheet" href="clientes.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Clientes · Pro</title>
+    <!-- Fonts e Ícones -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="clientes.css">
 </head>
 <body>
-
-<!-- Background noise overlay -->
-<div class="noise-overlay"></div>
-
-<!-- Grid background -->
-<div class="grid-bg"></div>
-
-<!-- Floating orbs -->
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
-
-<!-- Header -->
-<header class="header">
-    <div class="header-inner">
-        <div class="logo-area">
-            <div class="logo-mark">
-                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                    <rect width="36" height="36" rx="10" fill="var(--accent)"/>
-                    <path d="M10 18C10 13.5817 13.5817 10 18 10C22.4183 10 26 13.5817 26 18" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M26 18C26 22.4183 22.4183 26 18 26C13.5817 26 10 22.4183 10 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="3 3"/>
-                    <circle cx="18" cy="18" r="3" fill="white"/>
-                </svg>
+<!-- Container principal -->
+<div class="app-container">
+    <!-- Cabeçalho -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-area">
+                <i class="fas fa-users-between-lines"></i>
+                <h1>Clientes Pro</h1>
             </div>
-            <div class="logo-text">
-                <span class="logo-name">ClientHub</span>
-                <span class="logo-sub">Sistema de Gestão</span>
-            </div>
-        </div>
-        <nav class="header-nav">
-        <span class="nav-status">
-          <span class="status-dot" id="statusDot"></span>
-          <span id="statusText">Conectando…</span>
-        </span>
-            <button class="btn-icon" id="refreshBtn" title="Atualizar lista">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
-                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                </svg>
-            </button>
-            <button class="btn-primary" id="openCreateBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Novo Cliente
-            </button>
-        </nav>
-    </div>
-</header>
-
-<!-- Main -->
-<main class="main">
-
-    <!-- Stats bar -->
-    <section class="stats-bar" id="statsBar">
-        <div class="stat-card" id="statTotal">
-            <div class="stat-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div class="stat-content">
-                <span class="stat-value" id="totalCount">—</span>
-                <span class="stat-label">Total de Clientes</span>
-            </div>
-        </div>
-        <div class="stat-card" id="statEmail">
-            <div class="stat-icon stat-icon-2">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div class="stat-content">
-                <span class="stat-value" id="emailCount">—</span>
-                <span class="stat-label">Com E-mail</span>
-            </div>
-        </div>
-        <div class="stat-card" id="statPhone">
-            <div class="stat-icon stat-icon-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 12 19.79 19.79 0 0 1 1.07 3.38 2 2 0 0 1 3.05 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 15z"/></svg>
-            </div>
-            <div class="stat-content">
-                <span class="stat-value" id="phoneCount">—</span>
-                <span class="stat-label">Com Telefone</span>
-            </div>
-        </div>
-        <div class="stat-card stat-card-wide" id="statSearch">
-            <div class="search-wrapper">
-                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input type="text" id="searchInput" placeholder="Buscar por nome, email ou telefone…" class="search-input" />
-                <button class="search-clear" id="clearSearch" style="display:none">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <div class="header-actions">
+                <button id="btnExportarExcel" class="btn btn-outline" title="Exportar para Excel (CSV)">
+                    <i class="fas fa-file-excel"></i> Excel
+                </button>
+                <button id="btnGerarPDF" class="btn btn-outline" title="Exportar para PDF">
+                    <i class="fas fa-file-pdf"></i> PDF
+                </button>
+                <button id="btnNovoCliente" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Novo Cliente
                 </button>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- Content area -->
-    <section class="content-area">
-
-        <!-- Table header controls -->
-        <div class="table-controls">
-            <div class="table-title">
-                <h2>Cadastro de Clientes</h2>
-                <span class="record-count" id="recordCount">0 registros</span>
-            </div>
-            <div class="table-actions">
-                <div class="view-toggle">
-                    <button class="view-btn active" id="viewTable" title="Visualização em tabela">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
-                    </button>
-                    <button class="view-btn" id="viewCards" title="Visualização em cards">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-                    </button>
-                </div>
-                <select class="sort-select" id="sortSelect">
-                    <option value="nome-asc">Nome A → Z</option>
-                    <option value="nome-desc">Nome Z → A</option>
-                    <option value="email-asc">Email A → Z</option>
-                    <option value="id-asc">ID crescente</option>
-                </select>
+    <!-- Dashboard resumo -->
+    <div class="stats-wrapper">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Total de clientes</span>
+                <span id="totalClientes" class="stat-value">0</span>
             </div>
         </div>
-
-        <!-- Loading state -->
-        <div class="loading-state" id="loadingState">
-            <div class="skeleton-row" style="animation-delay:0s"></div>
-            <div class="skeleton-row" style="animation-delay:.1s"></div>
-            <div class="skeleton-row" style="animation-delay:.2s"></div>
-            <div class="skeleton-row" style="animation-delay:.3s"></div>
-            <div class="skeleton-row" style="animation-delay:.4s"></div>
-        </div>
-
-        <!-- Empty state -->
-        <div class="empty-state" id="emptyState" style="display:none">
-            <div class="empty-icon">
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <h3>Nenhum cliente encontrado</h3>
-            <p id="emptyMessage">Cadastre o primeiro cliente clicando em "Novo Cliente".</p>
-            <button class="btn-primary" id="emptyCreateBtn">Cadastrar Cliente</button>
-        </div>
-
-        <!-- Table view -->
-        <div class="table-wrapper" id="tableWrapper" style="display:none">
-            <table class="clients-table">
-                <thead>
-                <tr>
-                    <th class="th-id">ID</th>
-                    <th class="th-nome">Nome</th>
-                    <th class="th-email">E-mail</th>
-                    <th class="th-tel">Telefone</th>
-                    <th class="th-actions">Ações</th>
-                </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
-        </div>
-
-        <!-- Cards view -->
-        <div class="cards-grid" id="cardsGrid" style="display:none"></div>
-
-    </section>
-</main>
-
-<!-- Modal Overlay -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-
-        <div class="modal-header">
-            <div class="modal-title-area">
-                <div class="modal-icon" id="modalIcon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                </div>
-                <h2 class="modal-title" id="modalTitle">Novo Cliente</h2>
-            </div>
-            <button class="modal-close" id="modalClose" aria-label="Fechar">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="inputNome" class="form-label">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    Nome Completo
-                </label>
-                <div class="input-wrapper">
-                    <input type="text" id="inputNome" class="form-input" placeholder="Ex: João Silva" autocomplete="off" />
-                    <div class="input-border-anim"></div>
-                </div>
-                <span class="field-error" id="erroNome"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="inputEmail" class="form-label">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    E-mail
-                </label>
-                <div class="input-wrapper">
-                    <input type="email" id="inputEmail" class="form-input" placeholder="Ex: joao@email.com" autocomplete="off" />
-                    <div class="input-border-anim"></div>
-                </div>
-                <span class="field-error" id="erroEmail"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="inputTelefone" class="form-label">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 12 19.79 19.79 0 0 1 1.07 3.38 2 2 0 0 1 3.05 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 15z"/></svg>
-                    Telefone
-                </label>
-                <div class="input-wrapper">
-                    <input type="tel" id="inputTelefone" class="form-input" placeholder="Ex: (47) 99999-9999" autocomplete="off" />
-                    <div class="input-border-anim"></div>
-                </div>
-                <span class="field-error" id="erroTelefone"></span>
-            </div>
-
-            <div class="form-id-display" id="formIdDisplay" style="display:none">
-                <span class="id-label">ID do registro</span>
-                <code class="id-value" id="formIdValue"></code>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">E-mails únicos</span>
+                <span id="totalEmails" class="stat-value">0</span>
             </div>
         </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-phone"></i></div>
+            <div class="stat-info">
+                <span class="stat-label">Com telefone</span>
+                <span id="comTelefone" class="stat-value">0</span>
+            </div>
+        </div>
+    </div>
 
-        <div class="modal-footer">
-            <button class="btn-ghost" id="cancelBtn">Cancelar</button>
-            <button class="btn-primary btn-submit" id="submitBtn">
-                <span class="btn-text">Salvar Cliente</span>
-                <span class="btn-spinner" style="display:none">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-          </span>
-            </button>
+    <!-- Barra de ferramentas: busca -->
+    <div class="toolbar">
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="inputBusca" class="search-input" placeholder="Buscar por nome, e-mail ou telefone...">
+            <button id="btnLimparBusca" class="clear-search" style="display: none;"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <!-- Tabela de clientes -->
+    <div class="table-wrapper">
+        <table id="tabelaClientes" class="clientes-table">
+            <thead>
+            <tr>
+                <th data-sort="nome" class="sortable">Nome <i class="fas fa-sort"></i></th>
+                <th data-sort="email" class="sortable">E-mail <i class="fas fa-sort"></i></th>
+                <th data-sort="telefone" class="sortable">Telefone <i class="fas fa-sort"></i></th>
+                <th style="width: 120px;">Ações</th>
+            </tr>
+            </thead>
+            <tbody id="clientesTableBody"></tbody>
+        </table>
+
+        <!-- Estados de carregamento / vazio -->
+        <div id="loadingIndicator" class="loading">Carregando clientes...</div>
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <i class="fas fa-user-slash"></i>
+            <p>Nenhum cliente encontrado.</p>
         </div>
 
+        <!-- Paginação -->
+        <div id="paginacaoContainer" class="pagination-container" style="display: none;">
+            <div class="pagination-info">
+                Mostrando <span id="rangeInicio">1</span> a <span id="rangeFim">10</span> de <span id="totalRegistros">0</span> clientes
+            </div>
+            <div class="pagination-controls">
+                <button id="btnPaginaAnterior" class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                <span id="paginaAtual" class="pagination-current">1</span>
+                <button id="btnPaginaProxima" class="pagination-btn" disabled><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Delete Confirm Modal -->
-<div class="modal-overlay" id="deleteOverlay">
-    <div class="modal modal-sm" id="deleteModal">
-        <div class="modal-header">
-            <div class="modal-title-area">
-                <div class="modal-icon modal-icon-danger">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+<!-- Modal: Formulário de Cliente -->
+<div id="clienteModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Novo Cliente</h3>
+                <button class="modal-close" aria-label="Fechar">&times;</button>
+            </div>
+            <form id="clienteForm">
+                <input type="hidden" id="clienteId" name="id">
+                <div class="form-group">
+                    <label for="nome">Nome completo <span class="required">*</span></label>
+                    <input type="text" id="nome" name="nome" class="form-control" placeholder="Ex: João da Silva" required>
+                    <div class="error-message" data-for="nome"></div>
                 </div>
-                <h2 class="modal-title">Excluir Cliente</h2>
-            </div>
-            <button class="modal-close" id="deleteClose">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
+                <div class="form-group">
+                    <label for="email">E-mail <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="joao@email.com" required>
+                    <div class="error-message" data-for="email"></div>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" id="telefone" name="telefone" class="form-control" placeholder="(11) 99999-9999">
+                    <div class="error-message" data-for="telefone"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancelarModal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-body">
-            <p class="delete-message">Tem certeza que deseja excluir o cliente <strong id="deleteClientName"></strong>? Esta ação não pode ser desfeita.</p>
-            <div class="delete-warning">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                Os dados serão permanentemente removidos do sistema.
+    </div>
+</div>
+
+<!-- Modal: Confirmação de exclusão -->
+<div id="confirmModal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar exclusão</h3>
+                <button class="modal-close" aria-label="Fechar">&times;</button>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-ghost" id="deleteCancelBtn">Cancelar</button>
-            <button class="btn-danger" id="confirmDeleteBtn">
-                <span class="btn-text">Sim, Excluir</span>
-                <span class="btn-spinner" style="display:none">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-          </span>
-            </button>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o cliente <strong id="nomeClienteExcluir"></strong>?</p>
+                <p class="text-muted">Esta ação não pode ser desfeita.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnCancelarExclusao">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarExclusao">Excluir</button>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Toast container -->
-<div class="toast-container" id="toastContainer"></div>
-
-<script>
-    // ─── CONFIG ─────────────────────────────────────────────────────────────────
-    const API_BASE = 'http://localhost:8080/clientes';
-
-    // ─── STATE ──────────────────────────────────────────────────────────────────
-    let allClients = [];
-    let filteredClients = [];
-    let editingId = null;
-    let deleteTargetId = null;
-    let currentView = 'table';
-    let currentSort = 'nome-asc';
-    let searchTerm = '';
-
-    // ─── DOM REFS ────────────────────────────────────────────────────────────────
-    const statusDot       = document.getElementById('statusDot');
-    const statusText      = document.getElementById('statusText');
-    const refreshBtn      = document.getElementById('refreshBtn');
-    const openCreateBtn   = document.getElementById('openCreateBtn');
-    const emptyCreateBtn  = document.getElementById('emptyCreateBtn');
-
-    const loadingState    = document.getElementById('loadingState');
-    const emptyState      = document.getElementById('emptyState');
-    const emptyMessage    = document.getElementById('emptyMessage');
-    const tableWrapper    = document.getElementById('tableWrapper');
-    const tableBody       = document.getElementById('tableBody');
-    const cardsGrid       = document.getElementById('cardsGrid');
-    const recordCount     = document.getElementById('recordCount');
-
-    const totalCount      = document.getElementById('totalCount');
-    const emailCount      = document.getElementById('emailCount');
-    const phoneCount      = document.getElementById('phoneCount');
-
-    const searchInput     = document.getElementById('searchInput');
-    const clearSearch     = document.getElementById('clearSearch');
-
-    const viewTableBtn    = document.getElementById('viewTable');
-    const viewCardsBtn    = document.getElementById('viewCards');
-    const sortSelect      = document.getElementById('sortSelect');
-
-    // Modal form
-    const modalOverlay    = document.getElementById('modalOverlay');
-    const modal           = document.getElementById('modal');
-    const modalTitle      = document.getElementById('modalTitle');
-    const modalIcon       = document.getElementById('modalIcon');
-    const modalClose      = document.getElementById('modalClose');
-    const cancelBtn       = document.getElementById('cancelBtn');
-    const submitBtn       = document.getElementById('submitBtn');
-    const inputNome       = document.getElementById('inputNome');
-    const inputEmail      = document.getElementById('inputEmail');
-    const inputTelefone   = document.getElementById('inputTelefone');
-    const formIdDisplay   = document.getElementById('formIdDisplay');
-    const formIdValue     = document.getElementById('formIdValue');
-    const erroNome        = document.getElementById('erroNome');
-    const erroEmail       = document.getElementById('erroEmail');
-    const erroTelefone    = document.getElementById('erroTelefone');
-
-    // Delete modal
-    const deleteOverlay   = document.getElementById('deleteOverlay');
-    const deleteClose     = document.getElementById('deleteClose');
-    const deleteCancelBtn = document.getElementById('deleteCancelBtn');
-    const confirmDeleteBtn= document.getElementById('confirmDeleteBtn');
-    const deleteClientName= document.getElementById('deleteClientName');
-
-    const toastContainer  = document.getElementById('toastContainer');
-
-    // ─── UTILS ──────────────────────────────────────────────────────────────────
-    function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
-
-    function formatId(id){
-        if (!id) return '—';
-        return id.length > 8 ? id.substring(0,8).toUpperCase() + '…' : id.toUpperCase();
-    }
-
-    function formatPhone(tel){
-        if (!tel) return '—';
-        const digits = tel.replace(/\D/g, '');
-        if (digits.length === 11) return `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`;
-        if (digits.length === 10) return `(${digits.slice(0,2)}) ${digits.slice(2,6)}-${digits.slice(6)}`;
-        return tel;
-    }
-
-    function maskPhone(value){
-        const d = value.replace(/\D/g,'').slice(0,11);
-        if (d.length <= 2) return d.length ? `(${d}` : '';
-        if (d.length <= 6) return `(${d.slice(0,2)}) ${d.slice(2)}`;
-        if (d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
-        return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
-    }
-
-    function getInitials(name){
-        if (!name) return '??';
-        const parts = name.trim().split(' ').filter(Boolean);
-        if (parts.length === 1) return parts[0].slice(0,2).toUpperCase();
-        return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
-    }
-
-    function avatarColor(name){
-        const colors = [
-            '#6366f1','#8b5cf6','#ec4899','#f59e0b',
-            '#10b981','#3b82f6','#ef4444','#06b6d4',
-        ];
-        if (!name) return colors[0];
-        let hash = 0;
-        for(let c of name) hash = (hash * 31 + c.charCodeAt(0)) & 0xffffffff;
-        return colors[Math.abs(hash) % colors.length];
-    }
-
-    function highlight(text, term){
-        if (!term || !text) return text || '';
-        const re = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
-        return text.replace(re, '<mark>$1</mark>');
-    }
-
-    // ─── TOAST ──────────────────────────────────────────────────────────────────
-    function showToast(message, type = 'success'){
-        const icons = {
-            success: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>',
-            error:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
-            info:    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
-            warning: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-        };
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.innerHTML = `<span class="toast-icon">${icons[type]||icons.info}</span><span class="toast-msg">${message}</span><button class="toast-x" onclick="this.parentElement.remove()">×</button>`;
-        toastContainer.prepend(toast);
-        requestAnimationFrame(() => toast.classList.add('show'));
-        setTimeout(() => {
-            toast.classList.remove('show');
-            toast.addEventListener('transitionend', () => toast.remove(), {once:true});
-        }, 3800);
-    }
-
-    // ─── API ────────────────────────────────────────────────────────────────────
-    async function apiFetch(path, options = {}){
-        const res = await fetch(`${API_BASE}${path}`, {
-            headers: { 'Content-Type': 'application/json', ...options.headers },
-            ...options,
-        });
-        if (!res.ok){
-            const errText = await res.text().catch(() => res.statusText);
-            throw new Error(`Erro ${res.status}: ${errText}`);
-        }
-        const text = await res.text();
-        return text ? JSON.parse(text) : null;
-    }
-
-    async function fetchClientes(){
-        setLoading(true);
-        try {
-            const data = await apiFetch('');
-            allClients = data || [];
-            setConnectionStatus(true);
-            applyFilter();
-            updateStats();
-        } catch(e){
-            setConnectionStatus(false);
-            if (allClients.length === 0) showEmpty('Não foi possível conectar à API. Verifique se o servidor está rodando.');
-            showToast('Erro ao carregar clientes: ' + e.message, 'error');
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    async function criarCliente(payload){
-        return await apiFetch('', { method: 'POST', body: JSON.stringify(payload) });
-    }
-
-    async function atualizarCliente(id, payload){
-        return await apiFetch(`/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
-    }
-
-    async function deletarCliente(id){
-        return await apiFetch(`/${id}`, { method: 'DELETE' });
-    }
-
-    // ─── CONNECTION STATUS ───────────────────────────────────────────────────────
-    function setConnectionStatus(ok){
-        statusDot.className = 'status-dot ' + (ok ? 'online' : 'offline');
-        statusText.textContent = ok ? 'API conectada' : 'API offline';
-    }
-
-    // ─── LOADING ─────────────────────────────────────────────────────────────────
-    function setLoading(show){
-        loadingState.style.display = show ? 'flex' : 'none';
-        if (show){
-            tableWrapper.style.display = 'none';
-            cardsGrid.style.display = 'none';
-            emptyState.style.display = 'none';
-        }
-        refreshBtn.classList.toggle('spinning', show);
-    }
-
-    // ─── FILTER & SORT ───────────────────────────────────────────────────────────
-    function applyFilter(){
-        const term = searchTerm.toLowerCase().trim();
-        filteredClients = term
-            ? allClients.filter(c =>
-                (c.nome||'').toLowerCase().includes(term) ||
-                (c.email||'').toLowerCase().includes(term) ||
-                (c.telefone||'').toLowerCase().includes(term)
-            )
-            : [...allClients];
-
-        applySort();
-        renderList();
-    }
-
-    function applySort(){
-        const [field, dir] = currentSort.split('-');
-        filteredClients.sort((a,b) => {
-            const va = (a[field]||'').toLowerCase();
-            const vb = (b[field]||'').toLowerCase();
-            return dir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
-        });
-    }
-
-    function updateStats(){
-        totalCount.textContent = allClients.length;
-        emailCount.textContent = allClients.filter(c => c.email).length;
-        phoneCount.textContent = allClients.filter(c => c.telefone).length;
-    }
-
-    // ─── RENDER ──────────────────────────────────────────────────────────────────
-    function renderList(){
-        const term = searchTerm.trim();
-
-        if (filteredClients.length === 0){
-            showEmpty(term ? `Nenhum resultado para "<strong>${term}</strong>".` : 'Cadastre o primeiro cliente clicando em "Novo Cliente".');
-            recordCount.textContent = '0 registros';
-            return;
-        }
-
-        emptyState.style.display = 'none';
-        recordCount.textContent = `${filteredClients.length} registro${filteredClients.length !== 1 ? 's' : ''}`;
-
-        if (currentView === 'table'){
-            renderTable();
-        } else {
-            renderCards();
-        }
-    }
-
-    function showEmpty(msg){
-        emptyMessage.innerHTML = msg;
-        emptyState.style.display = 'flex';
-        tableWrapper.style.display = 'none';
-        cardsGrid.style.display = 'none';
-    }
-
-    function renderTable(){
-        tableWrapper.style.display = 'block';
-        cardsGrid.style.display = 'none';
-
-        tableBody.innerHTML = filteredClients.map((c, i) => `
-        <tr class="table-row" style="animation-delay:${i * 0.04}s">
-          <td class="td-id">
-            <code class="id-chip" title="${c.id}">${formatId(c.id)}</code>
-          </td>
-          <td class="td-nome">
-            <div class="client-name-cell">
-              <div class="avatar" style="background:${avatarColor(c.nome)}">${getInitials(c.nome)}</div>
-              <span>${highlight(c.nome||'—', searchTerm)}</span>
-            </div>
-          </td>
-          <td class="td-email">
-            ${c.email
-            ? `<a href="mailto:${c.email}" class="email-link">${highlight(c.email, searchTerm)}</a>`
-            : '<span class="empty-field">—</span>'}
-          </td>
-          <td class="td-tel">
-            ${c.telefone
-            ? `<span class="phone-value">${highlight(formatPhone(c.telefone), searchTerm)}</span>`
-            : '<span class="empty-field">—</span>'}
-          </td>
-          <td class="td-actions">
-            <div class="action-btns">
-              <button class="action-btn action-edit" onclick="openEdit('${c.id}')" title="Editar">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              </button>
-              <button class="action-btn action-delete" onclick="openDeleteConfirm('${c.id}', '${(c.nome||'').replace(/'/g,"\\'")}' )" title="Excluir">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-              </button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function renderCards(){
-        cardsGrid.style.display = 'grid';
-        tableWrapper.style.display = 'none';
-
-        cardsGrid.innerHTML = filteredClients.map((c, i) => `
-        <div class="client-card" style="animation-delay:${i * 0.06}s">
-          <div class="card-header-strip" style="background:${avatarColor(c.nome)}"></div>
-          <div class="card-body">
-            <div class="card-avatar" style="background:${avatarColor(c.nome)}">${getInitials(c.nome)}</div>
-            <div class="card-info">
-              <h3 class="card-name">${highlight(c.nome||'—', searchTerm)}</h3>
-              <code class="card-id" title="${c.id}">${formatId(c.id)}</code>
-            </div>
-            <div class="card-fields">
-              <div class="card-field">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <span>${c.email ? `<a href="mailto:${c.email}" class="email-link">${highlight(c.email, searchTerm)}</a>` : '<span class="empty-field">—</span>'}</span>
-              </div>
-              <div class="card-field">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.14 12 19.79 19.79 0 0 1 1.07 3.38 2 2 0 0 1 3.05 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 15z"/></svg>
-                <span>${c.telefone ? `<span class="phone-value">${highlight(formatPhone(c.telefone), searchTerm)}</span>` : '<span class="empty-field">—</span>'}</span>
-              </div>
-            </div>
-            <div class="card-actions">
-              <button class="card-btn card-btn-edit" onclick="openEdit('${c.id}')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Editar
-              </button>
-              <button class="card-btn card-btn-delete" onclick="openDeleteConfirm('${c.id}', '${(c.nome||'').replace(/'/g,"\\'")}')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-                Excluir
-              </button>
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // ─── MODAL FORM ──────────────────────────────────────────────────────────────
-    function openCreate(){
-        editingId = null;
-        clearForm();
-        modalTitle.textContent = 'Novo Cliente';
-        modalIcon.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
-        modalIcon.className = 'modal-icon';
-        submitBtn.querySelector('.btn-text').textContent = 'Salvar Cliente';
-        formIdDisplay.style.display = 'none';
-        openModal(modalOverlay);
-        setTimeout(() => inputNome.focus(), 200);
-    }
-
-    function openEdit(id){
-        const client = allClients.find(c => c.id === id);
-        if (!client) return showToast('Cliente não encontrado.', 'error');
-        editingId = id;
-        clearForm();
-        modalTitle.textContent = 'Editar Cliente';
-        modalIcon.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
-        modalIcon.className = 'modal-icon modal-icon-edit';
-        submitBtn.querySelector('.btn-text').textContent = 'Atualizar Cliente';
-        inputNome.value = client.nome || '';
-        inputEmail.value = client.email || '';
-        inputTelefone.value = client.telefone ? maskPhone(client.telefone.replace(/\D/g,'')) : '';
-        formIdValue.textContent = client.id;
-        formIdDisplay.style.display = 'flex';
-        openModal(modalOverlay);
-        setTimeout(() => inputNome.focus(), 200);
-    }
-
-    function openDeleteConfirm(id, name){
-        deleteTargetId = id;
-        deleteClientName.textContent = name || 'este cliente';
-        openModal(deleteOverlay);
-    }
-
-    function openModal(overlay){
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal(overlay){
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function clearForm(){
-        inputNome.value = '';
-        inputEmail.value = '';
-        inputTelefone.value = '';
-        clearErrors();
-    }
-
-    function clearErrors(){
-        [erroNome, erroEmail, erroTelefone].forEach(el => { el.textContent = ''; });
-        [inputNome, inputEmail, inputTelefone].forEach(el => el.classList.remove('input-error'));
-    }
-
-    function validateForm(){
-        clearErrors();
-        let valid = true;
-        const nome = inputNome.value.trim();
-        const email = inputEmail.value.trim();
-        const tel = inputTelefone.value.trim();
-
-        if (!nome){
-            erroNome.textContent = 'Nome é obrigatório.';
-            inputNome.classList.add('input-error');
-            valid = false;
-        } else if (nome.length < 2){
-            erroNome.textContent = 'Nome deve ter ao menos 2 caracteres.';
-            inputNome.classList.add('input-error');
-            valid = false;
-        }
-
-        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-            erroEmail.textContent = 'E-mail inválido.';
-            inputEmail.classList.add('input-error');
-            valid = false;
-        }
-
-        if (tel){
-            const digits = tel.replace(/\D/g,'');
-            if (digits.length < 10 || digits.length > 11){
-                erroTelefone.textContent = 'Telefone deve ter 10 ou 11 dígitos.';
-                inputTelefone.classList.add('input-error');
-                valid = false;
-            }
-        }
-
-        return valid;
-    }
-
-    function setSubmitting(loading){
-        submitBtn.disabled = loading;
-        submitBtn.querySelector('.btn-text').style.display = loading ? 'none' : 'inline';
-        submitBtn.querySelector('.btn-spinner').style.display = loading ? 'inline-flex' : 'none';
-    }
-
-    function setDeleting(loading){
-        confirmDeleteBtn.disabled = loading;
-        confirmDeleteBtn.querySelector('.btn-text').style.display = loading ? 'none' : 'inline';
-        confirmDeleteBtn.querySelector('.btn-spinner').style.display = loading ? 'inline-flex' : 'none';
-    }
-
-    async function handleSubmit(){
-        if (!validateForm()) return;
-        setSubmitting(true);
-
-        const payload = {
-            nome: inputNome.value.trim(),
-            email: inputEmail.value.trim() || null,
-            telefone: inputTelefone.value.replace(/\D/g,'') || null,
-        };
-
-        try {
-            if (editingId){
-                await atualizarCliente(editingId, payload);
-                showToast(`Cliente "${payload.nome}" atualizado com sucesso!`, 'success');
-            } else {
-                await criarCliente(payload);
-                showToast(`Cliente "${payload.nome}" cadastrado com sucesso!`, 'success');
-            }
-            closeModal(modalOverlay);
-            await fetchClientes();
-        } catch(e){
-            showToast('Erro ao salvar: ' + e.message, 'error');
-        } finally {
-            setSubmitting(false);
-        }
-    }
-
-    async function handleDelete(){
-        if (!deleteTargetId) return;
-        setDeleting(true);
-        try {
-            await deletarCliente(deleteTargetId);
-            const deleted = allClients.find(c => c.id === deleteTargetId);
-            showToast(`Cliente "${deleted?.nome || ''}" excluído.`, 'warning');
-            closeModal(deleteOverlay);
-            await fetchClientes();
-        } catch(e){
-            showToast('Erro ao excluir: ' + e.message, 'error');
-        } finally {
-            setDeleting(false);
-            deleteTargetId = null;
-        }
-    }
-
-    // ─── VIEW TOGGLE ─────────────────────────────────────────────────────────────
-    viewTableBtn.addEventListener('click', () => {
-        currentView = 'table';
-        viewTableBtn.classList.add('active');
-        viewCardsBtn.classList.remove('active');
-        applyFilter();
-    });
-
-    viewCardsBtn.addEventListener('click', () => {
-        currentView = 'cards';
-        viewCardsBtn.classList.add('active');
-        viewTableBtn.classList.remove('active');
-        applyFilter();
-    });
-
-    // ─── SORT ────────────────────────────────────────────────────────────────────
-    sortSelect.addEventListener('change', () => {
-        currentSort = sortSelect.value;
-        applyFilter();
-    });
-
-    // ─── SEARCH ──────────────────────────────────────────────────────────────────
-    searchInput.addEventListener('input', () => {
-        searchTerm = searchInput.value;
-        clearSearch.style.display = searchTerm ? 'flex' : 'none';
-        applyFilter();
-    });
-
-    clearSearch.addEventListener('click', () => {
-        searchInput.value = '';
-        searchTerm = '';
-        clearSearch.style.display = 'none';
-        applyFilter();
-        searchInput.focus();
-    });
-
-    // ─── PHONE MASK ──────────────────────────────────────────────────────────────
-    inputTelefone.addEventListener('input', (e) => {
-        const cursor = e.target.selectionStart;
-        const raw = e.target.value.replace(/\D/g,'');
-        e.target.value = maskPhone(raw);
-    });
-
-    // ─── EVENT WIRING ────────────────────────────────────────────────────────────
-    openCreateBtn.addEventListener('click', openCreate);
-    emptyCreateBtn.addEventListener('click', openCreate);
-    refreshBtn.addEventListener('click', () => fetchClientes());
-    modalClose.addEventListener('click', () => closeModal(modalOverlay));
-    cancelBtn.addEventListener('click', () => closeModal(modalOverlay));
-    submitBtn.addEventListener('click', handleSubmit);
-    deleteClose.addEventListener('click', () => closeModal(deleteOverlay));
-    deleteCancelBtn.addEventListener('click', () => closeModal(deleteOverlay));
-    confirmDeleteBtn.addEventListener('click', handleDelete);
-
-    // Close on overlay click
-    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(modalOverlay); });
-    deleteOverlay.addEventListener('click', (e) => { if (e.target === deleteOverlay) closeModal(deleteOverlay); });
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape'){
-            if (deleteOverlay.classList.contains('active')) closeModal(deleteOverlay);
-            else if (modalOverlay.classList.contains('active')) closeModal(modalOverlay);
-        }
-        if ((e.ctrlKey || e.metaKey) && e.key === 'n'){
-            e.preventDefault();
-            openCreate();
-        }
-    });
-
-    // Enter to submit in form
-    [inputNome, inputEmail, inputTelefone].forEach(el => {
-        el.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSubmit(); });
-    });
-
-    // ─── INIT ────────────────────────────────────────────────────────────────────
-    fetchClientes();
-</script>
+<div id="toastContainer" class="toast-container"></div>
+
+<!-- Scripts externos -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<script src="clientes.js"></script>
 </body>
 </html>

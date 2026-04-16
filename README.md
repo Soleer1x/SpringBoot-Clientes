@@ -57,15 +57,3 @@ O objetivo não é apenas fazer funcionar, mas criar uma base sólida, organizad
 
 ---
 
-```java
-@RestController
-@RequestMapping("/filosofia")
-public class FilosofiaController {
-    
-    @GetMapping
-    public ResponseEntity<String> getPrincipios() {
-        var principio = "Automatize a infraestrutura. Foque na estratégia do domínio.";
-        return ResponseEntity.ok(">> " + principio);
-    }
-}
-// STATUS 200 OK: >> Automatize a infraestrutura. Foque na estratégia do domínio.

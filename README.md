@@ -32,7 +32,7 @@
 ---
 
 <div align="center">
-  <img src="Clientes.png" alt="Banner Clientes" width="600px">
+  <img src="./" alt="Banner Clientes" width="600px">
 </div>
 
 ---

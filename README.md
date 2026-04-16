@@ -47,7 +47,7 @@ A arquitetura foi construída utilizando:
 
 - **Java + Spring Boot**
 - **PostMan para testes** 
-- **HTML, CSS e JavaScript** no frontend com IA
+- **HTML, CSS e JavaScript** no frontend usando IA
 - **Banco de dados H2** para desenvolvimento e testes  
   → Acesse o console: http://localhost:8080/h2-console
 
